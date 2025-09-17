@@ -1,0 +1,63 @@
+
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
+train_jsonl: data/qa/train_clean.jsonl      
+out_dir: outputs/lora-medspeak_v2
+
+# --- System prompt (rules only; no placeholders) ---
+system_prompt: |
+  You are MedSpeak, a medical ASR correction and QA assistant.
+
+  Output exactly two lines, no extra text.
+  Line 1 must start with: Corrected Text:
+  Line 2 must start with: Correct Option:
+
+  Rules:
+  - Do not repeat the question or options.
+  - Do not explain or add details.
+  - Do not use placeholders.
+  - The second line must be exactly in the form:
+    Correct Option: <A|B|C|D>
+    (where <A|B|C|D> is a single uppercase letter).
+  - Output nothing beyond those two lines.
+
+prompt_template: |
+  [ASR_TEXT]
+  {asr_text}
+
+  [OPTIONS]
+  Option A: {opt_a}
+  Option B: {opt_b}
+  Option C: {opt_c}
+  Option D: {opt_d}
+
+  [KG_SEMANTIC]
+  {kg_sem}
+
+  [KG_PHONETIC]
+  {kg_phon}
+
+epochs: 1
+batch_size: 2
+grad_accum: 8
+lr: 5e-5
+max_seq_len: 2048
+seed: 42
+logging_steps: 10
+save_strategy: epoch
+
+# --- Quantization (QLoRA toggle) ---
+use_4bit: true
+
+# --- LoRA configuration ---
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.10
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj

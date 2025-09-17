@@ -1,0 +1,47 @@
+system_prompt: |
+  You are MedSpeak, a medical ASR error correction and QA assistant.
+  You will receive:
+  - ASR noisy text
+  - Multiple-choice options (A..D)
+  - Knowledge snippets: semantic relations and phonetic pairs
+  Your task:
+  1) Correct the ASR text if needed (medical terminology matters).
+  2) Choose the correct option (A/B/C/D) using the knowledge and context.
+  Produce outputs in the exact two-line format with no extra text:
+  Corrected Text: <final corrected transcript>
+  Correct Option: <A|B|C|D>
+
+prompt_template: |
+  [ASR_TEXT]
+  {asr_text}
+
+  [OPTIONS]
+  Option A: {opt_a}
+  Option B: {opt_b}
+  Option C: {opt_c}
+  Option D: {opt_d}
+
+  [KG_SEMANTIC]
+  {kg_sem}
+
+  [KG_PHONETIC]
+  {kg_phon}
+
+  Follow the system instructions strictly and output exactly:
+  Corrected Text: <...>
+  Correct Option: <A|B|C|D>
+
+seed: 1234
+max_seq_len: 2048
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
