@@ -3,7 +3,7 @@
 **Llama-3.1-8B-Instruct (Full Fine-Tuning) + Whisper Small + Medical KG (Semantic + Phonetic)**
 
 <p align="center">
-  <img src="assets/medspeak_fig1.pdf" alt="MedSpeak Overview" width="900"/>
+  <img src="MedSpeak/assets/medspeak_fig1.pdf" alt="MedSpeak Overview" width="900"/>
 </p>
 
 
