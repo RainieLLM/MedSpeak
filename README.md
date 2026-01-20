@@ -38,12 +38,6 @@ End-to-end pipeline:
   <em>Figure 1: MedSpeak overview (Whisper → KG retrieval → LLM joint correction + QA).</em>
 </p>
 
-<p align="center">
-  <img src="assets/medspeak_fig3_kg_example.png" alt="KG Example" width="500"/>
-  <br/>
-  <em>Figure 3: Knowledge graph evidence example (semantic + phonetic retrieval).</em>
-</p>
-
 ---
 
 ## 🧱 Repo Structure (Important Scripts)
