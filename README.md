@@ -2,9 +2,6 @@
 
 **Llama-3.1-8B-Instruct (Full Fine-Tuning) + Whisper Small + Medical KG (Semantic + Phonetic)**
 
-<p align="center">
-  <img src="/assets/medspeak_fig1.pdf" alt="MedSpeak Overview" width="900"/>
-</p>
 
 
 ## 📄 Paper
@@ -18,7 +15,7 @@ Spoken medical question answering (SQA) pipelines typically rely on ASR transcri
 - **Corrected transcript**, and
 - **Selected answer option** (A/B/C/D)
 
----
+
 
 ## 🧠 System Overview
 
@@ -35,17 +32,17 @@ End-to-end pipeline:
   - (Optional) enable/disable KG for ablations
 - Evaluation: **WER** + **QA accuracy**
 
----
+<p align="center">
+  <img src="assets/medspeak_fig1_overview.png" alt="MedSpeak Overview" width="900"/>
+  <br/>
+  <em>Figure 1: MedSpeak overview (Whisper → KG retrieval → LLM joint correction + QA).</em>
+</p>
 
-## 🖼️ Add the Model Figure
-
-Place the overview figure at:
-
-```
-assets/medspeak_overview.png
-```
-
-(You can export Fig.1 from the paper PDF and save it to that path.)
+<p align="center">
+  <img src="assets/medspeak_fig3_kg_example.png" alt="KG Example" width="500"/>
+  <br/>
+  <em>Figure 3: Knowledge graph evidence example (semantic + phonetic retrieval).</em>
+</p>
 
 ---
 
