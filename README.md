@@ -131,16 +131,6 @@ python scripts/build_training_jsonl.py \
   --out_jsonl data/qa/train.jsonl
 ```
 
-<!-- ### (Optional) Fix repeated outputs by adjusting system context
-
-```bash
-python scripts/convert_train_jsonl.py \
-  --in data/qa/train.jsonl \
-  --out data/qa/fixv2.jsonl
-``` -->
-
----
-
 ## 🔥 Full Fine-Tuning (Llama-3.1-8B-Instruct)
 
 > Full fine-tuning is GPU-intensive. Adjust epochs/batch/seq_len as needed.
@@ -175,28 +165,7 @@ This unified entrypoint supports multiple evaluation modes and shard-based multi
 
 ```bash
 CUDA_VISIBLE_DEVICES=1,2,3,4,5,6,7 \
-python scripts/infer_medspeak_allmodes.py infer \
-  --manifest data/qa/manifest.csv \
-  --kg_sql artifacts/kg_semantic.sqlite \
-  --kg_phon artifacts/kg_phonetic.jsonl \
-  --base_model meta-llama/Meta-Llama-3.1-8B-Instruct \
-  --config config_v2.yaml \
-  --preds_out runs/zeroshot_gttext_llm.jsonl \
-  --shard_out_dir runs/shards_zeroshot_gttext_llm \
-  --gpus 1,2,3,4,5,6,7 \
-  --workers_per_gpu 1 \
-  --periodic_merge_secs 30 \
-  --merge_to_live \
-  --async_writer \
-  --fsync_every 10 \
-  --task_q_max 8192 \
-  --result_q_max 8192 \
-  --gen_max_time 45 \
-  --asr_timeout 60 \
-  --retries 1 \
-  --input_mode text \
-  --resume \
-  --echo_json
+python scripts/infer_medspeak_allmodes.py infer 
 ```
 
 ### Mode 2) Whisper + Base LLM (audio, no KG)
@@ -204,27 +173,6 @@ python scripts/infer_medspeak_allmodes.py infer \
 ```bash
 CUDA_VISIBLE_DEVICES=1,2,3,4,5,6,7 \
 python scripts/infer_medspeak_allmodes.py infer 
-  # --manifest data/qa/manifest.csv \
-  # --kg_sql artifacts/kg_semantic.sqlite \
-  # --kg_phon artifacts/kg_phonetic.jsonl \
-  # --base_model meta-llama/Meta-Llama-3.1-8B-Instruct \
-  # --config config_v2.yaml \
-  # --preds_out runs/whisper_llm.jsonl \
-  # --shard_out_dir runs/shards_whisper_llm \
-  # --gpus 1,2,3,4,5,6,7 \
-  # --workers_per_gpu 1 \
-  # --periodic_merge_secs 30 \
-  # --merge_to_live \
-  # --async_writer \
-  # --fsync_every 10 \
-  # --task_q_max 8192 \
-  # --result_q_max 8192 \
-  # --gen_max_time 45 \
-  # --asr_timeout 60 \
-  # --retries 1 \
-  # --input_mode audio \
-  # --resume \
-  # --echo_json
 ```
 
 ### Mode 3) MedSpeak: Whisper + KG + Fine-Tuned LLM (audio + KG)
@@ -232,28 +180,6 @@ python scripts/infer_medspeak_allmodes.py infer
 ```bash
 CUDA_VISIBLE_DEVICES=1,2,3,4,5,6,7 \
 python scripts/infer_medspeak_allmodes.py infer 
-  # --manifest data/qa/manifest.csv \
-  # --kg_sql artifacts/kg_semantic.sqlite \
-  # --kg_phon artifacts/kg_phonetic.jsonl \
-  # --base_model outputs/fullft-medspeak_hist_server_version \
-  # --config config_v2.yaml \
-  # --preds_out runs/medspeak_full.jsonl \
-  # --shard_out_dir runs/shards_medspeak_full \
-  # --gpus 1,2,3,4,5,6,7 \
-  # --workers_per_gpu 1 \
-  # --periodic_merge_secs 30 \
-  # --merge_to_live \
-  # --async_writer \
-  # --fsync_every 10 \
-  # --task_q_max 8192 \
-  # --result_q_max 8192 \
-  # --gen_max_time 45 \
-  # --asr_timeout 60 \
-  # --retries 1 \
-  # --input_mode audio \
-  # --use_kg \
-  # --resume \
-  # --echo_json
 ```
 
 ### Mode 4) Fine-Tuned LLM + GT text (optional KG)
@@ -263,27 +189,6 @@ python scripts/infer_medspeak_allmodes.py infer
 ```bash
 CUDA_VISIBLE_DEVICES=1,2,3,4,5,6,7 \
 python scripts/infer_medspeak_allmodes.py infer 
-  # --manifest data/qa/manifest.csv \
-  # --kg_sql artifacts/kg_semantic.sqlite \
-  # --kg_phon artifacts/kg_phonetic.jsonl \
-  # --base_model outputs/fullft-medspeak_hist_server_version \
-  # --config config_v2.yaml \
-  # --preds_out runs/ft_gttext_llm.jsonl \
-  # --shard_out_dir runs/shards_ft_gttext_llm \
-  # --gpus 1,2,3,4,5,6,7 \
-  # --workers_per_gpu 1 \
-  # --periodic_merge_secs 30 \
-  # --merge_to_live \
-  # --async_writer \
-  # --fsync_every 10 \
-  # --task_q_max 8192 \
-  # --result_q_max 8192 \
-  # --gen_max_time 45 \
-  # --asr_timeout 60 \
-  # --retries 1 \
-  # --input_mode text \
-  # --resume \
-  # --echo_json
 ```
 
 #### 4B) With KG
@@ -291,28 +196,6 @@ python scripts/infer_medspeak_allmodes.py infer
 ```bash
 CUDA_VISIBLE_DEVICES=1,2,3,4,5,6,7 \
 python scripts/infer_medspeak_allmodes.py infer 
-  # --manifest data/qa/manifest.csv \
-  # --kg_sql artifacts/kg_semantic.sqlite \
-  # --kg_phon artifacts/kg_phonetic.jsonl \
-  # --base_model outputs/fullft-medspeak_hist_server_version \
-  # --config config_v2.yaml \
-  # --preds_out runs/ft_gttext_llm_withkg.jsonl \
-  # --shard_out_dir runs/shards_ft_gttext_llm_withkg \
-  # --gpus 1,2,3,4,5,6,7 \
-  # --workers_per_gpu 1 \
-  # --periodic_merge_secs 30 \
-  # --merge_to_live \
-  # --async_writer \
-  # --fsync_every 10 \
-  # --task_q_max 8192 \
-  # --result_q_max 8192 \
-  # --gen_max_time 45 \
-  # --asr_timeout 60 \
-  # --retries 1 \
-  # --input_mode text \
-  # --use_kg \
-  # --resume \
-  # --echo_json
 ```
 
 ### (Optional) Manual shard merge anytime
@@ -340,24 +223,3 @@ We report:
 - `meta-llama/Meta-Llama-3.1-8B-Instruct` may require access approval (HuggingFace / model license).
 - Full fine-tuning is compute heavy; for quick tests reduce:
   - `--epochs`, `--batch_size`, `--max_seq_len`, or use fewer GPUs.
-
----
-
-<!-- ## 🧾 Citation
-
-If you use this repo, please cite:
-
-```bibtex
-@inproceedings{medspeak2026,
-  title={MedSpeak: A Knowledge Graph-Aided ASR Error Correction Framework for Spoken Medical QA},
-  author={...},
-  booktitle={ICASSP},
-  year={2026}
-}
-``` -->
-
----
-
-## 📬 Contact
-
-Open an issue or contact the authors for questions or collaboration.
